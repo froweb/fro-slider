@@ -1,0 +1,19 @@
+{
+  "name": "fro-slider",
+  "version": "0.0.1",
+  "description": "Simple image slider.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/froweb/fro-slider.git"
+  },
+  "author": "Frolov Andrey <frolov@froweb.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/froweb/fro-slider/issues"
+  },
+  "homepage": "https://github.com/froweb/fro-slider#readme"
+}
