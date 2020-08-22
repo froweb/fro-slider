@@ -1,6 +1,6 @@
+module.exports = FroSlider;
 'use strict';
 
-// export default 
 class FroSlider {
   /**
   * Setting basic parameters of the slider.
@@ -115,7 +115,3 @@ class FroSlider {
     }
   }
 }
-
-window.addEventListener('DOMContentLoaded', function() {
-  new FroSlider("one", true, 6);
-})
