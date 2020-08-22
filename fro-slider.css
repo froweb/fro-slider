@@ -1,0 +1,33 @@
+.fro-slider {
+	margin: 0 auto;
+	padding: 0;
+	position: relative;
+	width: 600px;
+	height: 400px;
+	box-sizing: border-box;
+}
+.fro-slider__row {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	z-index: 0;
+	border-radius: 20px;
+	box-sizing: border-box;
+}
+.fro__slide {
+	height: 100%;
+	width: 100%;
+	z-index: -2;
+	opacity: 0;
+	transition: opacity 3s;
+	object-fit: cover;
+	position: absolute;
+	box-sizing: border-box;
+	background-color: #999999;
+}
+.active-slide {
+	z-index: -1;
+	opacity: 1;
+	transition: opacity 1.5s ease-in;
+} 
