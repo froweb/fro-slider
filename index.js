@@ -13,10 +13,9 @@ class FroSlider {
     this.options = {
       id: id,
       avtoplay: avtoplay || true,
-      interval: interval || 5,
+      interval: (interval || 5) * 1000,
       dots: dots || true,
     }
-    // this.play();
   }
   /**
   * Checking the validity of the types of slider parameters.
@@ -140,7 +139,7 @@ class FroSlider {
     }
     this.addView(0);
     if (this.options.avtoplay) {
-      setInterval(() => this.setNext(), this.options.interval * 1000);
+      setInterval(() => this.setNext(), this.options.interval);
     }
   }
 }
