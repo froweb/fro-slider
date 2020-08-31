@@ -1,4 +1,4 @@
-module.exports = FroSlider;
+// module.exports = FroSlider;
 'use strict';
 
 class FroSlider {
@@ -7,14 +7,16 @@ class FroSlider {
   * @param {string} id Identifier of the processed slider.
   * @param {boolean} avtoplay Automatic image change in the slider.
   * @param {number} interval Time interval between image change (in seconds).
+  * @param {boolean} dots Show points for navigation.
   */
-  constructor (id, avtoplay, interval) {
+  constructor (id, avtoplay, interval, dots) {
     this.options = {
       id: id,
       avtoplay: avtoplay || true,
       interval: interval || 5,
+      dots: dots || true,
     }
-    this.play();
+    // this.play();
   }
   /**
   * Checking the validity of the types of slider parameters.
@@ -39,10 +41,10 @@ class FroSlider {
   }
   /**
   * Gets all images in slider.
-  * @param {object} sliderId Charset of connecting DataBase.
   * @return {object} Returns NodeList of images in the slider.
   */
-  getItems(sliderId) {
+  getItems() {
+    const sliderId = document.querySelector(`#${this.options.id}`);
     const sliderItems = sliderId.querySelectorAll(".fro__slide");
     return sliderItems;
   }
@@ -51,8 +53,7 @@ class FroSlider {
   * @param {number} i Number of the desired image in the set.
   */
   addView(i) {
-    const sliderId = document.querySelector(`#${this.options.id}`);
-    const sliderItems = this.getItems(sliderId);
+    const sliderItems = this.getItems();
     sliderItems[i].classList.add('active-slide');
   }
   /**
@@ -60,15 +61,14 @@ class FroSlider {
   * @param {number} i Number of the desired image in the set.
   */
   removeView(i) {
-    const sliderId = document.querySelector(`#${this.options.id}`);
-    const sliderItems = this.getItems(sliderId);
+    const sliderItems = this.getItems();
     sliderItems[i].classList.remove('active-slide');
   }
   /**
   * Shows the next image.
-  * @param {object} sliderItems NodeList of images in the slider.
   */
-  setNext(sliderItems) {
+  setNext() {
+    const sliderItems = this.getItems();
     for (let i = 0; i < sliderItems.length; i++) {
       if (sliderItems[i].classList.contains('active-slide')) {
         const end = sliderItems.length - 1;
@@ -84,9 +84,9 @@ class FroSlider {
   }
   /**
   * Shows the previous image.
-  * @param {object} sliderItems NodeList of images in the slider.
   */
-  setPrev(sliderItems) {
+  setPrev() {
+    const sliderItems = this.getItems();
     for (let i = 0; i < sliderItems.length; i++) {
       if (sliderItems[i].classList.contains('active-slide')) {
         if (i == 0) {
@@ -102,16 +102,38 @@ class FroSlider {
     }
   }
   /**
+  * Adds dots to navigate through slides.
+  */
+  makeDots() {
+    const sliderId = document.querySelector(`#${this.options.id}`);
+    const sliderItems = this.getItems();
+    let dotRow = document.createElement('div');
+    dotRow.className = "fro__dot-bar";
+    sliderId.append(dotRow);
+    for (let i=0;  i < sliderItems.length; i++) {
+      let dotTage = document.createElement('button');
+      dotTage.className = "fro__dot";
+      if (i==0) {
+        dotTage.className = "fro__dot active-dot";
+      }
+      dotRow.append(dotTage);
+    }
+  }
+  /**
   * Start displaying images.
   */
   play() {
-    const sliderId = document.querySelector(`#${this.options.id}`);
-    const sliderItems = this.getItems(sliderId);
-    sliderItems[0].classList.add('active-slide');
     this.checkIncoming();
+    this.addView(0);
+    if (this.options.dots) {
+      this.makeDots();
+    }
 
     if (this.options.avtoplay) {
-      setInterval(() => this.setNext(sliderItems), this.options.interval * 1000);
+      setInterval(() => this.setNext(), this.options.interval * 1000);
     }
   }
 }
+
+const slider = new FroSlider("one");
+slider.play();

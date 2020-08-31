@@ -1,6 +1,6 @@
 {
   "name": "fro-slider",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Simple image slider",
   "main": "index.js",
   "keywords": [
@@ -17,7 +17,7 @@
   },
   "files": [
     "index.js", 
-    "fro-slider.js"
+    "fro-slider.css"
   ],
   "author": "Frolov Andrey <frolov@froweb.ru>",
   "license": "ISC",
