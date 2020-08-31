@@ -55,6 +55,11 @@ class FroSlider {
   addView(i) {
     const sliderItems = this.getItems();
     sliderItems[i].classList.add('active-slide');
+    if (this.options.dots) {
+      const sliderId = document.querySelector(`#${this.options.id}`);
+      let dotItem = sliderId.querySelectorAll('.fro__dot');
+      dotItem[i].classList.add('active-dot');
+    }
   }
   /**
   * Removes a class to hide the image.
@@ -63,6 +68,11 @@ class FroSlider {
   removeView(i) {
     const sliderItems = this.getItems();
     sliderItems[i].classList.remove('active-slide');
+    if (this.options.dots) {
+      const sliderId = document.querySelector(`#${this.options.id}`);
+      let dotItem = sliderId.querySelectorAll('.fro__dot');
+      dotItem[i].classList.remove('active-dot');
+    }
   }
   /**
   * Shows the next image.
@@ -124,11 +134,11 @@ class FroSlider {
   */
   play() {
     this.checkIncoming();
-    this.addView(0);
+    
     if (this.options.dots) {
       this.makeDots();
     }
-
+    this.addView(0);
     if (this.options.avtoplay) {
       setInterval(() => this.setNext(), this.options.interval * 1000);
     }
