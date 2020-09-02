@@ -38,12 +38,19 @@ class FroSlider {
         "Parameter \"interval\" is set incorrectly!");
     }
   }
+    /**
+  * Returns a slider object by id.
+  * @return {object} Object by id.
+  */
+ getId() {
+  return document.querySelector(`#${this.options.id}`);
+}
   /**
   * Gets all images in slider.
   * @return {object} Returns NodeList of images in the slider.
   */
   getItems() {
-    const sliderId = document.querySelector(`#${this.options.id}`);
+    const sliderId = this.getId();
     const sliderItems = sliderId.querySelectorAll(".fro__slide");
     return sliderItems;
   }
@@ -55,7 +62,7 @@ class FroSlider {
     const sliderItems = this.getItems();
     sliderItems[i].classList.add('active-slide');
     if (this.options.dots) {
-      const sliderId = document.querySelector(`#${this.options.id}`);
+      const sliderId = this.getId();
       let dotItem = sliderId.querySelectorAll('.fro__dot');
       dotItem[i].classList.add('active-dot');
     }
@@ -68,7 +75,7 @@ class FroSlider {
     const sliderItems = this.getItems();
     sliderItems[i].classList.remove('active-slide');
     if (this.options.dots) {
-      const sliderId = document.querySelector(`#${this.options.id}`);
+      const sliderId = this.getId();
       let dotItem = sliderId.querySelectorAll('.fro__dot');
       dotItem[i].classList.remove('active-dot');
     }
@@ -114,7 +121,7 @@ class FroSlider {
   * Adds dots to navigate through slides.
   */
   makeDots() {
-    const sliderId = document.querySelector(`#${this.options.id}`);
+    const sliderId = this.getId();
     const sliderItems = this.getItems();
     let dotRow = document.createElement('div');
     dotRow.className = "fro__dot-bar";
@@ -143,6 +150,3 @@ class FroSlider {
     }
   }
 }
-
-const slider = new FroSlider("one");
-slider.play();
