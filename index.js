@@ -8,13 +8,15 @@ class FroSlider {
   * @param {boolean} avtoplay Automatic image change in the slider.
   * @param {number} interval Time interval between image change (in seconds).
   * @param {boolean} dots Show points for navigation.
+  * @param {boolean} btns Show buttons for navigation.
   */
-  constructor (id, avtoplay, interval, dots) {
+  constructor (id, avtoplay, interval, dots, btns) {
     this.options = {
       id: id,
       avtoplay: avtoplay || true,
       interval: (interval || 5) * 1000,
       dots: dots || true,
+      btns: btns || true,
     }
   }
   /**
@@ -135,6 +137,17 @@ class FroSlider {
       dotRow.append(dotTage);
     }
   }
+  makeButtons() {
+    const sliderId = this.getId();
+    let btnRow = document.createElement('div'),
+        btnNext = document.createElement('button'),
+        btnPrev = document.createElement('button');
+    btnRow.className = "fro__btn-bar";
+    btnNext.className = "fro__btn btn-next";
+    btnPrev.className = "fro__btn btn-prev";
+    sliderId.append(btnRow);
+    btnRow.append(btnPrev,btnNext);
+  }
   /**
   * Start displaying images.
   */
@@ -144,9 +157,15 @@ class FroSlider {
     if (this.options.dots) {
       this.makeDots();
     }
+    if (this.options.btns) {
+      this.makeButtons();
+    }
     this.addView(0);
     if (this.options.avtoplay) {
       setInterval(() => this.setNext(), this.options.interval);
     }
   }
 }
+
+const slider = new FroSlider("one");
+slider.play();
