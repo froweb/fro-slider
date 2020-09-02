@@ -31,3 +31,25 @@
 	opacity: 1;
 	transition: opacity 1.5s ease-in;
 } 
+.fro__dot-bar {
+	margin: 5px;
+	display: flex;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	justify-content: center;
+}
+.fro__dot {
+	margin: 5px;
+	cursor: pointer;
+	height: 20px;
+	width: 20px;
+	border: none;
+	background-color: #666666;
+	border-radius: 50%;
+	opacity: 0.5;
+}
+.active-dot {
+	transition: .2s;
+	background-color: #FFFFFF;
+}
