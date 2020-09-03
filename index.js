@@ -137,6 +137,9 @@ class FroSlider {
       dotRow.append(dotTage);
     }
   }
+  /**
+  * Adds buttons to navigate through slides.
+  */
   makeButtons() {
     const sliderId = this.getId();
     let btnRow = document.createElement('div'),
@@ -147,6 +150,24 @@ class FroSlider {
     btnPrev.className = "fro__btn btn-prev";
     sliderId.append(btnRow);
     btnRow.append(btnPrev,btnNext);
+  }
+  /**
+  * Check pressing buttons.
+  */
+  clickCheck() {
+    const sliderId = this.getId();
+    if (this.options.btns || this.options.dots) {
+      sliderId.addEventListener('click', (e) => {
+        let target = e.target;
+        if (target && target.classList.contains('btn-next')) {
+          this.setNext();
+        }
+        if (target && target.classList.contains('btn-prev')) {
+          this.setPrev();
+        }
+        
+      })
+    }
   }
   /**
   * Start displaying images.
@@ -164,6 +185,7 @@ class FroSlider {
     if (this.options.avtoplay) {
       setInterval(() => this.setNext(), this.options.interval);
     }
+    this.clickCheck();
   }
 }
 
