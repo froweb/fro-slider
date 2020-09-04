@@ -1,4 +1,4 @@
-// module.exports = FroSlider;
+module.exports = FroSlider;
 'use strict';
 
 class FroSlider {
@@ -18,7 +18,7 @@ class FroSlider {
       dots: dots || true,
       btns: btns || true,
     };
-    this._playForward;
+    this._playForward; //stores id of autoplay interval
   }
   /**
   * Checking the validity of the types of slider parameters.
@@ -183,6 +183,9 @@ class FroSlider {
       })
     }
   }
+    /**
+  * Restart slideshow.
+  */
   restart() {
     if (this.options.autoplay == true) {
       clearInterval(this._playForward);
@@ -209,5 +212,3 @@ class FroSlider {
   }
 }
 
-const slider = new FroSlider("one");
-slider.play();
