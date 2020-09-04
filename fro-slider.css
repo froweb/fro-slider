@@ -53,3 +53,39 @@
 	transition: .2s;
 	background-color: #FFFFFF;
 }
+.fro__btn-bar {
+	display: flex;
+	position: absolute;
+	top: 45%;
+	justify-content: space-between;
+	width: 100%;
+}
+.fro__btn {
+	margin: 15px;
+	height: 20px;
+	cursor: pointer;
+	display: flex;
+	width: 20px;
+	border: none;
+	opacity: 0.5;
+	background-color: transparent;
+	border: solid #CCCCCC;
+	border-width: 0 6px 6px 0;
+	transition: .1s;
+}
+.btn-next {
+	transform: rotate(-45deg);
+}
+.btn-prev{
+	transform: rotate(135deg);
+}
+.btn-next:hover, .btn-prev:hover, .btn-next:focus, .btn-prev:focus {
+	border-color: #FFFFFF;
+	transition: .2s;
+	opacity: 0.8;
+	height: 32px;
+	width: 32px;
+	margin: 10px;
+	outline: none;
+	border-width: 0 10px 10px 0;
+}
