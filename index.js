@@ -17,6 +17,21 @@ class FroSlider {
       interval: (interval || 5) * 1000,
       dots: dots || true,
       btns: btns || true,
+    };
+    this._on = false;
+    this._playForward;
+  }
+  isOn() {
+    const on = this._on
+    return on;
+  }
+  switchPlay() {
+    if (this.isOn() == true) {
+      this._on = false;
+      console.log("false")
+    } else {
+      this._on = true;
+      console.log("true")
     }
   }
   /**
@@ -149,10 +164,10 @@ class FroSlider {
     btnNext.className = "fro__btn btn-next";
     btnPrev.className = "fro__btn btn-prev";
     sliderId.append(btnRow);
-    btnRow.append(btnPrev,btnNext);
+    btnRow.append(btnPrev, btnNext);
   }
   /**
-  * Check pressing buttons.
+  * Check pressing buttons and dots.
   */
   clickCheck() {
     const sliderId = this.getId();
@@ -160,14 +175,40 @@ class FroSlider {
       sliderId.addEventListener('click', (e) => {
         let target = e.target;
         if (target && target.classList.contains('btn-next')) {
+          this.start();
           this.setNext();
+          this.start();
         }
         if (target && target.classList.contains('btn-prev')) {
+          this.start();
           this.setPrev();
+          this.start();
         }
-        
+        if (target && target.classList.contains('fro__dot')) {
+          const dotItem = sliderId.querySelectorAll('.fro__dot');
+          for (let i=0; i < dotItem.length; i++) {
+            if (dotItem[i].classList.contains('active-dot')) {
+              this.removeView(i);
+            }
+            if (target == dotItem[i]) {
+              this.addView(i);
+            }
+          }
+        }
       })
     }
+  }
+  start() {
+    if (this.isOn() == true) {
+      this._playForward = setInterval(() => this.setNext(), this.options.interval);
+      console.log("play");
+    }
+    if (this.isOn() == false) {
+      clearInterval(this._playForward);
+      this._playForward = "";
+      console.log("pause");
+    }
+    this.switchPlay();
   }
   /**
   * Start displaying images.
@@ -183,7 +224,7 @@ class FroSlider {
     }
     this.addView(0);
     if (this.options.avtoplay) {
-      setInterval(() => this.setNext(), this.options.interval);
+      this._playForward = setInterval(() => this.setNext(), this.options.interval);
     }
     this.clickCheck();
   }
