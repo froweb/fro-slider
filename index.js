@@ -1,4 +1,4 @@
-module.exports = FroSlider;
+// module.exports = FroSlider;
 'use strict';
 
 class FroSlider {
@@ -9,14 +9,16 @@ class FroSlider {
   * @param {number} interval Time interval between image change (in seconds).
   * @param {boolean} dots Show points for navigation.
   * @param {boolean} btns Show buttons for navigation.
+  * @param {boolean} click Go to the next slide by clicking on the image.
   */
-  constructor (id, autoplay, interval, dots, btns) {
+  constructor (id, autoplay, interval, dots, btns, click) {
     this.options = {
       id: id,
       autoplay: autoplay || true,
       interval: (interval || 5) * 1000,
       dots: dots || true,
       btns: btns || true,
+      click: click || false,
     };
     this._playForward; //stores id of autoplay interval
   }
@@ -157,6 +159,14 @@ class FroSlider {
   */
   clickCheck() {
     const sliderId = this.getId();
+    if (!this.options.autoPlay && !this.options.btns) {
+      sliderId.addEventListener('click', (e) => {
+        let target = e.target;
+        if (target && target.classList.contains('fro__slide')) {
+          this.setNext();
+        }
+      })
+    }
     if (this.options.btns || this.options.dots) {
       sliderId.addEventListener('click', (e) => {
         let target = e.target;
@@ -182,6 +192,9 @@ class FroSlider {
         }
       })
     }
+  }
+  clickToNext() {
+
   }
     /**
   * Restart slideshow.
@@ -212,3 +225,8 @@ class FroSlider {
   }
 }
 
+const slider = new FroSlider("one");
+slider.options.autoplay = false;
+slider.options.btns = false;
+
+slider.play();
