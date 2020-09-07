@@ -1,45 +1,10 @@
-module.exports = FroSlider;
+// module.exports = FroSlider;
 'use strict';
 
-class FroSlider {
-  /**
-  * Setting basic parameters of the slider.
-  * @param {string} id Identifier of the processed slider.
-  * @param {boolean} autoplay Automatic image change in the slider.
-  * @param {number} interval Time interval between image change (in seconds).
-  * @param {boolean} dots Show points for navigation.
-  * @param {boolean} btns Show buttons for navigation.
-  * @param {boolean} click Go to the next slide by clicking on the image.
-  */
-  constructor (id, autoplay, interval, dots, btns, click) {
+class ProtoSlider {
+  constructor(id) {
     this.options = {
-      id: id,
-      autoplay: autoplay || true,
-      interval: (interval || 5) * 1000,
-      dots: dots || true,
-      btns: btns || true,
-      click: click || false,
-    };
-  }
-  /**
-  * Checking the validity of the types of slider parameters.
-  */
-  checkIncoming() {
-    if (this.options.id == '' || typeof this.options.id !== 'string') {
-      console.log(
-        "fro-slider ERROR! \n" + 
-        "Parameter \"id\" is set incorrectly!");
-    }
-    if (typeof this.options.autoplay !== 'boolean') {
-      console.log(
-        "fro-slider ERROR! \n" + 
-        "Parameter \"autoplay\" is set incorrectly!");
-        this.options['autoplay'] = false;
-    }
-    if (typeof this.options.interval !== 'number') {
-      console.log(
-        "fro-slider ERROR! \n" + 
-        "Parameter \"interval\" is set incorrectly!");
+      id: id
     }
   }
   /**
@@ -149,7 +114,49 @@ class FroSlider {
     this.sliderId.append(btnRow);
     btnRow.append(btnPrev, btnNext);
   }
+
+}
+
+class FroSlider extends ProtoSlider {
   /**
+  * Setting basic parameters of the slider.
+  * @param {string} id Identifier of the processed slider.
+  * @param {boolean} autoplay Automatic image change in the slider.
+  * @param {number} interval Time interval between image change (in seconds).
+  * @param {boolean} dots Show points for navigation.
+  * @param {boolean} btns Show buttons for navigation.
+  * @param {boolean} click Go to the next slide by clicking on the image.
+  */
+  constructor (id, autoplay, interval, dots, btns, click) {
+    super(id);
+    this.options.autoplay = autoplay || true;
+    this.options.interval = (interval || 5) * 1000;
+    this.options.dots = dots || true;
+    this.options.btns = btns || true;
+    this.options.click = click || false;
+  }
+  /**
+  * Checking the validity of the types of slider parameters.
+  */
+  checkIncoming() {
+    if (this.options.id == '' || typeof this.options.id !== 'string') {
+      console.log(
+        "fro-slider ERROR! \n" + 
+        "Parameter \"id\" is set incorrectly!");
+    }
+    if (typeof this.options.autoplay !== 'boolean') {
+      console.log(
+        "fro-slider ERROR! \n" + 
+        "Parameter \"autoplay\" is set incorrectly!");
+        this.options['autoplay'] = false;
+    }
+    if (typeof this.options.interval !== 'number') {
+      console.log(
+        "fro-slider ERROR! \n" + 
+        "Parameter \"interval\" is set incorrectly!");
+    }
+  }
+    /**
   * Check pressing buttons and dots.
   */
   clickCheck() {
@@ -217,3 +224,6 @@ class FroSlider {
     this.clickCheck();
   }
 }
+const slider = new FroSlider("one");
+slider.play();
+// slider.
