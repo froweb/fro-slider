@@ -1,4 +1,4 @@
-// module.exports = FroSlider;
+module.exports = FroSlider;
 'use strict';
 
 class FroSlider {
@@ -20,7 +20,6 @@ class FroSlider {
       btns: btns || true,
       click: click || false,
     };
-    this._playForward; //stores id of autoplay interval
   }
   /**
   * Checking the validity of the types of slider parameters.
@@ -55,18 +54,22 @@ class FroSlider {
   * @return {object} Returns NodeList of images in the slider.
   */
   get sliderItems() {
-    // const sliderId = this.getId();this.sliderId.querySelectorAll(".fro__slide");
     return this.sliderId.querySelectorAll(".fro__slide");
+  }
+  /**
+  * Gets id of autoplay function.
+  * @return {number} Returns NodeList of images in the slider.
+  */
+  get newPlayId() {
+    return setInterval(() => this.setNext(), this.options.interval);
   }
   /**
   * Adds a class to display the image.
   * @param {number} i Number of the desired image in the set.
   */
   addView(i) {
-    // const sliderItems = this.getItems();
     this.sliderItems[i].classList.add('active-slide');
     if (this.options.dots == true) {
-      // const sliderId = this.getId();
       let dotItem = this.sliderId.querySelectorAll('.fro__dot');
       dotItem[i].classList.add('active-dot');
     }
@@ -138,8 +141,8 @@ class FroSlider {
   */
   makeButtons() {
     const btnRow = document.createElement('div'),
-        btnNext = document.createElement('button'),
-        btnPrev = document.createElement('button');
+          btnNext = document.createElement('button'),
+          btnPrev = document.createElement('button');
     btnRow.className = "fro__btn-bar";
     btnNext.className = "fro__btn btn-next";
     btnPrev.className = "fro__btn btn-prev";
@@ -150,6 +153,10 @@ class FroSlider {
   * Check pressing buttons and dots.
   */
   clickCheck() {
+    let playId;
+    if (this.options.autoplay == true) {
+      playId = this.newPlayId;
+    }
     if (!this.options.autoPlay && !this.options.btns) {
       this.sliderId.addEventListener('click', (e) => {
         let target = e.target;
@@ -163,11 +170,11 @@ class FroSlider {
         let target = e.target;
         if (target && target.classList.contains('btn-next')) {
           this.setNext();
-          this.restart();
+          playId = this.restart(playId);
         }
         if (target && target.classList.contains('btn-prev')) {
           this.setPrev();
-          this.restart();
+          playId = this.restart(playId);
         }
         if (target && target.classList.contains('fro__dot')) {
           const dotItem = this.sliderId.querySelectorAll('.fro__dot');
@@ -179,41 +186,34 @@ class FroSlider {
               this.addView(i);
             }
           }
-          this.restart();
+          playId = this.restart(playId);
         }
       })
     }
   }
     /**
   * Restart slideshow.
+  * @param {number} playId Id of autoplay function.
   */
-  restart() {
+  restart(playId) {
     if (this.options.autoplay == true) {
-      clearInterval(this._playForward);
-      this._playForward = setInterval(() => this.setNext(), this.options.interval);
+      clearInterval(playId);
+      playId = this.newPlayId;
     }
+    return playId;
   }
   /**
   * Start displaying images.
   */
   play() {
     this.checkIncoming();
-    if (this.options.dots == true) {
-      this.makeDots();
-    }
     if (this.options.btns == true) {
       this.makeButtons();
     }
-    this.addView(0);
-    if (this.options.autoplay == true) {
-      this._playForward = setInterval(() => this.setNext(), this.options.interval);
+    if (this.options.dots == true) {
+      this.makeDots();
     }
+    this.addView(0);
     this.clickCheck();
   }
 }
-
-const slider = new FroSlider("one");
-// slider.options.autoplay = false;
-// slider.options.btns = "we";
-
-slider.play();
