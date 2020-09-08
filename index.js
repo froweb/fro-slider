@@ -124,15 +124,15 @@ class FroSlider extends ProtoSlider {
   * @param {boolean} autoplay Automatic image change in the slider.
   * @param {number} interval Time interval between image change (in seconds).
   * @param {boolean} dots Show points for navigation.
-  * @param {boolean} btns Show buttons for navigation.
+  * @param {boolean} buttons Show buttons for navigation.
   * @param {boolean} click Go to the next slide by clicking on the image.
   */
-  constructor (id, autoplay, interval, dots, btns, click) {
+  constructor (id, autoplay, interval, dots, buttons, click) {
     super(id);
     this.options.autoplay = autoplay || true;
     this.options.interval = (interval || 5) * 1000;
     this.options.dots = dots || true;
-    this.options.btns = btns || true;
+    this.options.buttons = buttons || true;
     this.options.click = click || false;
   }
   /**
@@ -164,26 +164,28 @@ class FroSlider extends ProtoSlider {
     if (this.options.autoplay == true) {
       playId = this.newPlayId;
     }
-    if (!this.options.autoPlay && !this.options.btns) {
+    if (this.options.autoplay == false && 
+        this.options.buttons == false) {
       this.sliderId.addEventListener('click', (e) => {
         let target = e.target;
-        if (target && target.classList.contains('fro__slide')) {
+        if (target.classList.contains('fro__slide')) {
           this.setNext();
         }
       })
     }
-    if (this.options.btns || this.options.dots) {
+    if (this.options.buttons == true || 
+        this.options.dots == true) {
       this.sliderId.addEventListener('click', (e) => {
         let target = e.target;
-        if (target && target.classList.contains('btn-next')) {
+        if (target.classList.contains('btn-next')) {
           this.setNext();
           playId = this.restart(playId);
         }
-        if (target && target.classList.contains('btn-prev')) {
+        if (target.classList.contains('btn-prev')) {
           this.setPrev();
           playId = this.restart(playId);
         }
-        if (target && target.classList.contains('fro__dot')) {
+        if (target.classList.contains('fro__dot')) {
           const dotItem = this.sliderId.querySelectorAll('.fro__dot');
           for (let i=0; i < dotItem.length; i++) {
             if (dotItem[i].classList.contains('active-dot')) {
@@ -214,7 +216,7 @@ class FroSlider extends ProtoSlider {
   */
   play() {
     this.checkIncoming();
-    if (this.options.btns == true) {
+    if (this.options.buttons == true) {
       this.makeButtons();
     }
     if (this.options.dots == true) {
@@ -225,5 +227,8 @@ class FroSlider extends ProtoSlider {
   }
 }
 const slider = new FroSlider("one");
+// slider.options.click = true;
+// slider.options.buttons = false;
+// slider.options.autoplay = false;
 slider.play();
 // slider.
