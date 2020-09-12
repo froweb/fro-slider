@@ -26,7 +26,7 @@ class ProtoSlider {
   * @return {number} Returns NodeList of images in the slider.
   */
   get newPlayId() {
-    return setInterval(() => this.setNext(), this.options.interval);
+    return setInterval(() => this.setNext(), this.options.interval * 1000);
   }
   /**
   * Adds a class to display the image.
@@ -114,7 +114,6 @@ class ProtoSlider {
     this.sliderId.append(btnRow);
     btnRow.append(btnPrev, btnNext);
   }
-
 }
 
 class FroSlider extends ProtoSlider {
@@ -130,10 +129,11 @@ class FroSlider extends ProtoSlider {
   constructor (id, autoplay, interval, dots, buttons, click) {
     super(id);
     this.options.autoplay = autoplay || true;
-    this.options.interval = (interval || 5) * 1000;
+    this.options.interval = interval || 5;
     this.options.dots = dots || true;
     this.options.buttons = buttons || true;
     this.options.click = click || false;
+    this.checkIncoming();
   }
   /**
   * Checking the validity of the types of slider parameters.
@@ -156,7 +156,7 @@ class FroSlider extends ProtoSlider {
         "Parameter \"interval\" is set incorrectly!");
     }
   }
-    /**
+  /**
   * Check pressing buttons and dots.
   */
   clickCheck() {
@@ -200,7 +200,7 @@ class FroSlider extends ProtoSlider {
       })
     }
   }
-    /**
+  /**
   * Restart slideshow.
   * @param {number} playId Id of autoplay function.
   */
@@ -215,7 +215,6 @@ class FroSlider extends ProtoSlider {
   * Start displaying images.
   */
   play() {
-    this.checkIncoming();
     if (this.options.buttons == true) {
       this.makeButtons();
     }
@@ -226,9 +225,12 @@ class FroSlider extends ProtoSlider {
     this.clickCheck();
   }
 }
-const slider = new FroSlider("one");
+const slider1 = new FroSlider("one");
 // slider.options.click = true;
 // slider.options.buttons = false;
 // slider.options.autoplay = false;
-slider.play();
+slider1.play();
+const slider2 = new FroSlider("two");
+slider2.options.interval = 2.4;
+slider2.play();
 // slider.
