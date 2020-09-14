@@ -19,7 +19,7 @@ class ProtoSlider {
   * @return {object} Returns NodeList of images in the slider.
   */
   get sliderItems() {
-    return this.sliderId.querySelectorAll(".fro__slide");
+    return this.sliderId.querySelectorAll('.fro__slide');
   }
   /**
   * Gets id of autoplay function.
@@ -90,13 +90,13 @@ class ProtoSlider {
   */
   makeDots() {
     let dotRow = document.createElement('div');
-    dotRow.className = "fro__dot-bar";
+    dotRow.className = 'fro__dot-bar';
     this.sliderId.append(dotRow);
     for (let i=0;  i < this.sliderItems.length; i++) {
       let dotTage = document.createElement('button');
-      dotTage.className = "fro__dot";
+      dotTage.className = 'fro__dot';
       if (i==0) {
-        dotTage.className = "fro__dot active-dot";
+        dotTage.className = 'fro__dot active-dot';
       }
       dotRow.append(dotTage);
     }
@@ -108,9 +108,9 @@ class ProtoSlider {
     const btnRow = document.createElement('div'),
           btnNext = document.createElement('button'),
           btnPrev = document.createElement('button');
-    btnRow.className = "fro__btn-bar";
-    btnNext.className = "fro__btn btn-next";
-    btnPrev.className = "fro__btn btn-prev";
+    btnRow.className = 'fro__btn-bar';
+    btnNext.className = 'fro__btn btn-next';
+    btnPrev.className = 'fro__btn btn-prev';
     this.sliderId.append(btnRow);
     btnRow.append(btnPrev, btnNext);
   }
@@ -133,27 +133,40 @@ class FroSlider extends ProtoSlider {
     this.options.dots = dots || true;
     this.options.buttons = buttons || true;
     this.options.click = click || false;
-    this.checkIncoming();
   }
   /**
   * Checking the validity of the types of slider parameters.
   */
   checkIncoming() {
-    if (this.options.id == '' || typeof this.options.id !== 'string') {
-      console.log(
-        "fro-slider ERROR! \n" + 
-        "Parameter \"id\" is set incorrectly!");
+    const errorMessage = (key) => {
+      let str = "fro-slider: ERROR! \n" +
+            `Parameter \"${key}\" is set incorrectly!`;
+      return str;
+    };
+    const checkType = (data, dataType) => {
+      if (data !== '' && typeof(data) === dataType) {
+        return true;
+      } else {
+        return false;
+      }
     }
-    if (typeof this.options.autoplay !== 'boolean') {
-      console.log(
-        "fro-slider ERROR! \n" + 
-        "Parameter \"autoplay\" is set incorrectly!");
-        this.options['autoplay'] = false;
+    if (!checkType(this.options.id, 'string')) {
+      console.log(errorMessage('id'));
     }
-    if (typeof this.options.interval !== 'number') {
-      console.log(
-        "fro-slider ERROR! \n" + 
-        "Parameter \"interval\" is set incorrectly!");
+    if (!checkType(this.options.autoplay, 'boolean')) {
+      console.log(errorMessage('autoplay'));
+    }
+    if (!checkType(this.options.interval, 'number')) {
+      console.log(errorMessage('interval'));
+    }
+    if (!checkType(this.options.dots, 'boolean')) {
+      console.log(errorMessage('dots'));
+    }
+    if (!checkType(this.options.buttons, 'boolean')) {
+      console.log(errorMessage('buttons'));
+    }
+    if (!checkType(this.options.click, 'boolean')) {
+      console.log(errorMessage('click'));
     }
   }
   /**
@@ -215,6 +228,7 @@ class FroSlider extends ProtoSlider {
   * Start displaying images.
   */
   play() {
+    this.checkIncoming();
     if (this.options.buttons == true) {
       this.makeButtons();
     }
@@ -226,9 +240,9 @@ class FroSlider extends ProtoSlider {
   }
 }
 const slider1 = new FroSlider("one");
-// slider.options.click = true;
-// slider.options.buttons = false;
-// slider.options.autoplay = false;
+// slider1.options.click = "true";
+// slider1.options.buttons = "false";
+slider1.options.autoplay = "fe";
 slider1.play();
 const slider2 = new FroSlider("two");
 slider2.options.interval = 2.4;
