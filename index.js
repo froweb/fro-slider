@@ -120,16 +120,14 @@ class FroSlider extends ProtoSlider {
   /**
   * Setting basic parameters of the slider.
   * @param {string} id Identifier of the processed slider.
-  * @param {boolean} autoplay Automatic image change in the slider.
   * @param {number} interval Time interval between image change (in seconds).
   * @param {boolean} dots Show points for navigation.
   * @param {boolean} buttons Show buttons for navigation.
   * @param {boolean} click Go to the next slide by clicking on the image.
   */
-  constructor (id, autoplay, interval, dots, buttons, click) {
+  constructor (id, interval, dots, buttons, click) {
     super(id);
-    this.options.autoplay = autoplay || true;
-    this.options.interval = interval || 5;
+    this.options.interval = interval || 0;
     this.options.dots = dots || true;
     this.options.buttons = buttons || true;
     this.options.click = click || false;
@@ -153,9 +151,6 @@ class FroSlider extends ProtoSlider {
     if (!checkType(this.options.id, 'string')) {
       console.log(errorMessage('id'));
     }
-    if (!checkType(this.options.autoplay, 'boolean')) {
-      console.log(errorMessage('autoplay'));
-    }
     if (!checkType(this.options.interval, 'number')) {
       console.log(errorMessage('interval'));
     }
@@ -174,10 +169,10 @@ class FroSlider extends ProtoSlider {
   */
   clickCheck() {
     let playId;
-    if (this.options.autoplay == true) {
+    if (this.options.interval > 0) {
       playId = this.newPlayId;
     }
-    if (this.options.autoplay == false && 
+    if (this.options.interval <= 0 && 
         this.options.buttons == false) {
       this.sliderId.addEventListener('click', (e) => {
         let target = e.target;
@@ -218,7 +213,7 @@ class FroSlider extends ProtoSlider {
   * @param {number} playId Id of autoplay function.
   */
   restart(playId) {
-    if (this.options.autoplay == true) {
+    if (this.options.interval > 0) {
       clearInterval(playId);
       playId = this.newPlayId;
     }
@@ -239,7 +234,7 @@ class FroSlider extends ProtoSlider {
     this.clickCheck();
   }
 }
-const slider1 = new FroSlider("one");
+const slider1 = new FroSlider("one", 5);
 // slider1.options.click = "true";
 // slider1.options.buttons = "false";
 slider1.options.autoplay = "fe";
