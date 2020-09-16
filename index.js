@@ -1,4 +1,4 @@
-// module.exports = FroSlider;
+module.exports = FroSlider;
 'use strict';
 
 class ProtoSlider {
@@ -86,6 +86,23 @@ class ProtoSlider {
     }
   }
   /**
+  * Show the desired image at the selected dot.
+  * @param {object} target Node of selected dot.
+  * 
+  */
+  setDot(target) {
+    console.log(target);
+    const dotItem = this.sliderId.querySelectorAll('.fro__dot');
+    for (let i=0; i < dotItem.length; i++) {
+      if (dotItem[i].classList.contains('active-dot')) {
+        this.removeView(i);
+      }
+      if (target == dotItem[i]) {
+        this.addView(i);
+      }
+    }
+  }
+  /**
   * Adds dots to navigate through slides.
   */
   makeDots() {
@@ -148,20 +165,16 @@ class FroSlider extends ProtoSlider {
         return false;
       }
     }
-    if (!checkType(this.options.id, 'string')) {
-      console.log(errorMessage('id'));
-    }
-    if (!checkType(this.options.interval, 'number')) {
-      console.log(errorMessage('interval'));
-    }
-    if (!checkType(this.options.dots, 'boolean')) {
-      console.log(errorMessage('dots'));
-    }
-    if (!checkType(this.options.buttons, 'boolean')) {
-      console.log(errorMessage('buttons'));
-    }
-    if (!checkType(this.options.click, 'boolean')) {
-      console.log(errorMessage('click'));
+    for (let key in this.options) {
+      const dataType = () => {
+        if (key == 'id') {return 'string'};
+        if (key == 'interval') {return 'number'};
+        if (key == 'dots' || key == 'buttons' || 
+        key == 'click') {return 'boolean'};
+      }
+      console.assert(
+        checkType(this.options[key], dataType()), errorMessage(key)
+      );
     }
   }
   /**
@@ -172,41 +185,25 @@ class FroSlider extends ProtoSlider {
     if (this.options.interval > 0) {
       playId = this.newPlayId;
     }
-    if (this.options.interval <= 0 && 
-        this.options.buttons == false) {
-      this.sliderId.addEventListener('click', (e) => {
-        let target = e.target;
-        if (target.classList.contains('fro__slide')) {
-          this.setNext();
-        }
-      })
-    }
-    if (this.options.buttons == true || 
-        this.options.dots == true) {
-      this.sliderId.addEventListener('click', (e) => {
-        let target = e.target;
-        if (target.classList.contains('btn-next')) {
-          this.setNext();
-          playId = this.restart(playId);
-        }
-        if (target.classList.contains('btn-prev')) {
-          this.setPrev();
-          playId = this.restart(playId);
-        }
-        if (target.classList.contains('fro__dot')) {
-          const dotItem = this.sliderId.querySelectorAll('.fro__dot');
-          for (let i=0; i < dotItem.length; i++) {
-            if (dotItem[i].classList.contains('active-dot')) {
-              this.removeView(i);
-            }
-            if (target == dotItem[i]) {
-              this.addView(i);
-            }
-          }
-          playId = this.restart(playId);
-        }
-      })
-    }
+    this.sliderId.addEventListener('click', (e) => {
+      let target = e.target;
+      console.log(target)
+      if (target.classList.contains('btn-next')) {
+        this.setNext();
+      }
+      if (target.classList.contains('btn-prev')) {
+        this.setPrev();
+      }
+      if (target.classList.contains('fro__dot')) {
+        this.setDot(target);
+      }
+      if (target.classList.contains('fro__slide') && 
+          this.options.interval <= 0 && 
+          this.options.buttons == false) {
+        this.setNext();
+      }
+      playId = this.restart(playId);
+    })
   }
   /**
   * Restart slideshow.
@@ -224,22 +221,13 @@ class FroSlider extends ProtoSlider {
   */
   play() {
     this.checkIncoming();
-    if (this.options.buttons == true) {
+    if (this.options.buttons === true) {
       this.makeButtons();
     }
-    if (this.options.dots == true) {
+    if (this.options.dots === true) {
       this.makeDots();
     }
     this.addView(0);
     this.clickCheck();
   }
 }
-const slider1 = new FroSlider("one", 5);
-// slider1.options.click = "true";
-// slider1.options.buttons = "false";
-slider1.options.autoplay = "fe";
-slider1.play();
-const slider2 = new FroSlider("two");
-slider2.options.interval = 2.4;
-slider2.play();
-// slider.
