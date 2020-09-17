@@ -17,6 +17,7 @@
   },
   "files": [
     "index.js", 
+    "license",
     "fro-slider.css"
   ],
   "author": "Frolov Andrey <frolov@froweb.ru>",
