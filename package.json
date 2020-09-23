@@ -9,6 +9,7 @@
     "simple slider"
   ],
   "scripts": {
+    "build": "cross-env NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,14 +17,22 @@
     "url": "git+https://github.com/froweb/fro-slider.git"
   },
   "files": [
-    "index.js", 
+    "index.js",
     "license",
     "fro-slider.css"
   ],
+  "browserslist": "> 0.25%, not dead",
   "author": "Frolov Andrey <frolov@froweb.ru>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/froweb/fro-slider/issues"
   },
-  "homepage": "https://github.com/froweb/fro-slider#readme"
+  "homepage": "https://github.com/froweb/fro-slider#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "cross-env": "^7.0.2"
+  }
 }

@@ -187,7 +187,6 @@ class FroSlider extends ProtoSlider {
     }
     this.sliderId.addEventListener('click', (e) => {
       let target = e.target;
-      console.log(target)
       if (target.classList.contains('btn-next')) {
         this.setNext();
       }
