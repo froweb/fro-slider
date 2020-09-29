@@ -2,10 +2,6 @@
 
 Fro-slider is fairly easy to implement into a project. it has no dependencies, redundant features and is intuitive.
 
-## Demos
-
-coming soon ...
-
 ## Getting Started
 
 To install the slider, you can either manually download the repository (https://github.com/froweb/fro-slider) or use npm:
@@ -73,6 +69,10 @@ myFavoriteSlider.play();
 |dots|true|Boolean|Display dots (markers) for easy navigation among images|
 |buttons|true|Boolean|Display buttons (previous / next) for easy navigation between images|
 |click|false|Boolean|Show next image when clicking on image (does not work when showing buttons)|
+
+## Demos
+
+coming soon ...
 
 ## License
 
