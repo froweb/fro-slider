@@ -1,6 +1,6 @@
 {
   "name": "fro-slider",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Simple image slider",
   "main": "index.js",
   "keywords": [
@@ -9,8 +9,10 @@
     "simple slider"
   ],
   "scripts": {
-    "build": "cross-env NODE_ENV=production babel src --out-dir dist --source-maps inline",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf lib",
+    "lint": "eslint src",
+    "build": "cross-env BABEL_ENV=production babel src --out-dir lib",
+    "prepublish": "npm run clean && npm run lint && npm run build"
   },
   "repository": {
     "type": "git",
@@ -18,10 +20,8 @@
   },
   "files": [
     "index.js",
-    "license",
-    "fro-slider.css"
+    "license"
   ],
-  "browserslist": "> 0.25%, not dead",
   "author": "Frolov Andrey <frolov@froweb.ru>",
   "license": "ISC",
   "bugs": {
@@ -31,8 +31,15 @@
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
-    "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.11.5",
-    "cross-env": "^7.0.2"
-  }
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-add-module-exports": "^1.0.4",
+    "babel-preset-minify": "^0.5.1",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.10.0",
+    "eslint-config-google": "^0.14.0",
+    "path": "^0.12.7",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {}
 }
