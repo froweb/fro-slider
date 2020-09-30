@@ -12,15 +12,14 @@
     "clean": "rimraf lib",
     "lint": "eslint src",
     "build": "cross-env BABEL_ENV=production babel src --out-dir lib",
-    "prepublish": "npm run clean && npm run lint && npm run build"
+    "prepublishOnly": "npm run clean && npm run lint && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/froweb/fro-slider.git"
   },
   "files": [
-    "./lib/index.js",
-    "license"
+    "lib"
   ],
   "author": "Frolov Andrey <frolov@froweb.ru>",
   "license": "ISC",
