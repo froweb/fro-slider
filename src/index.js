@@ -96,7 +96,6 @@ class ProtoSlider {
   * @param {object} target Node of selected dot.
   */
   setDot(target) {
-    console.log(target);
     const dotItem = this.sliderId.querySelectorAll('.fro__dot');
     for (let i=0; i < dotItem.length; i++) {
       if (dotItem[i].classList.contains('active-dot')) {

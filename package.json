@@ -1,6 +1,6 @@
 {
   "name": "fro-slider",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Simple image slider",
   "main": "./lib/index.js",
   "keywords": [
